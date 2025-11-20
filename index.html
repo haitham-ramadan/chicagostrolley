@@ -5,46 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Chicago Trolley</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+    
+    body {
       background: #000;
       color: white;
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 10px;
-      box-sizing: border-box;
+      padding: 20px;
+      overflow-x: hidden;
     }
+    
     .container {
       text-align: center;
       max-width: 100%;
       width: 600px;
       padding: 20px;
     }
+    
     h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff 0%, #14B8A6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
+    
     p {
-      font-size: 1rem;
+      font-size: 1.1rem;
+      color: #888;
+      line-height: 1.6;
     }
-    @media (max-width: 600px) {
+    
+    .emoji {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+      
       h1 {
         font-size: 1.5rem;
       }
+      
       p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
       }
+      
+      .emoji {
+        font-size: 3rem;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+    }
+    
+    /* Fix widget overflow on mobile */
+    vapi-widget {
+      max-width: 100vw !important;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Client Demo: Voice Agent</h1>
-    <p>Click the widget button on the bottom right to start testing the voice agent.</p>
+    <div class="emoji">🚎</div>
+    <h1>Chicago Trolley Voice Agent</h1>
+    <p>Click the widget button in the bottom-right corner to start a conversation with our AI assistant.</p>
   </div>
-
+  
+  <!-- Vapi Widget with mobile-optimized settings -->
   <vapi-widget
     public-key="a3414333-681c-482c-8ffa-c1be89d89d99"
     assistant-id="22f9046d-bd90-4f10-b7b7-66d865e0e546"
@@ -52,10 +94,10 @@
     theme="dark"
     base-bg-color="#000000"
     accent-color="#14B8A6"
-    cta-button-color="#000000"
-    cta-button-text-color="#ffffff"
+    cta-button-color="#14B8A6"
+    cta-button-text-color="#000000"
     border-radius="large"
-    size="full"
+    size="medium"
     position="bottom-right"
     title="Talk with Chicagostrolley"
     start-button-text="Start"
@@ -68,7 +110,77 @@
     consent-content="By clicking 'Agree,' and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service."
     consent-storage-key="vapi_widget_consent"
   ></vapi-widget>
-
+  
   <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+  
+  <script>
+    // Mobile audio fix: Detect mobile devices
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    
+    // Fix widget size on mobile after load
+    window.addEventListener('load', function() {
+      if (isMobile()) {
+        // Add mobile-specific styles to fix widget display
+        const style = document.createElement('style');
+        style.textContent = `
+          /* Mobile widget fixes */
+          vapi-widget {
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 10px !important;
+            left: auto !important;
+            max-width: calc(100vw - 20px) !important;
+            z-index: 9999 !important;
+          }
+          
+          /* Make widget container responsive */
+          vapi-widget > div,
+          vapi-widget iframe {
+            max-width: 95vw !important;
+            max-height: 85vh !important;
+            width: auto !important;
+          }
+          
+          /* Fix widget button size on mobile */
+          vapi-widget button {
+            width: 60px !important;
+            height: 60px !important;
+          }
+          
+          /* Ensure widget modal fits screen */
+          vapi-widget [role="dialog"],
+          vapi-widget [class*="modal"],
+          vapi-widget [class*="widget-container"] {
+            max-width: 95vw !important;
+            max-height: 85vh !important;
+            width: 100% !important;
+            margin: 10px auto !important;
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Show mobile audio tip
+        console.log('Mobile device detected - make sure to unmute your phone and allow microphone permissions');
+      }
+    });
+    
+    // Detect if audio context is suspended (common on mobile)
+    document.addEventListener('click', function initAudio() {
+      if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+        
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume().then(() => {
+            console.log('Audio context resumed - audio should work now');
+          });
+        }
+      }
+      // Only run once
+      document.removeEventListener('click', initAudio);
+    }, { once: true });
+  </script>
 </body>
 </html>
