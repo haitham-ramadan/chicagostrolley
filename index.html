@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chicago's Trolley</title>
+  <title>Chicago's Trolley - Demo</title>
   <style>
     html, body {
       margin: 0;
@@ -34,49 +34,70 @@
       font-size: 1rem;
     }
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.3rem;
-      }
-      p {
-        font-size: 0.9rem;
-      }
+      h1 { font-size: 1.3rem; }
+      p { font-size: 0.9rem; }
+    }
+
+    /* Floating button for mobile/desktop */
+    #start-widget-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #14B8A6;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Client Demo: Voice Agent</h1>
-    <p>Tap the widget button on the bottom right to start testing the voice agent.</p>
+    <p>Tap the button on the bottom right to start testing the voice agent.</p>
   </div>
 
-  <!-- Latest VAPI AI recommended script initialization -->
+  <!-- Floating button -->
+  <button id="start-widget-btn">Talk to Agent</button>
+
+  <!-- VAPI SDK -->
   <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js" async defer></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      window.vapiSDK.run({
-        apiKey: "a3414333-681c-482c-8ffa-c1be89d89d99",
-        assistant: "22f9046d-bd90-4f10-b7b7-66d865e0e546",
-        config: {
-          mode: "voice",
-          theme: "dark",
-          size: "compact",
-          position: "bottom-right",
-          baseBgColor: "#000000",
-          accentColor: "#14B8A6",
-          ctaButtonColor: "#000000",
-          ctaButtonTextColor: "#ffffff",
-          borderRadius: "large",
-          startButtonText: "Start",
-          endButtonText: "End Call",
-          chatFirstMessage: "Hey, How can I help you today?",
-          chatPlaceholder: "Type your message...",
-          voiceShowTranscript: true,
-          consentRequired: true,
-          consentTitle: "Terms and conditions",
-          consentContent: "By clicking 'Agree,' and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service.",
-          consentStorageKey: "vapi_widget_consent"
-        }
-      });
+    let widgetInitialized = false;
+    const btn = document.getElementById('start-widget-btn');
+
+    btn.addEventListener('click', () => {
+      if (!widgetInitialized && window.vapiSDK) {
+        window.vapiSDK.run({
+          apiKey: "a3414333-681c-482c-8ffa-c1be89d89d99",
+          assistant: "22f9046d-bd90-4f10-b7b7-66d865e0e546",
+          config: {
+            mode: "voice",
+            theme: "dark",
+            size: "compact",
+            position: "bottom-right",
+            baseBgColor: "#000000",
+            accentColor: "#14B8A6",
+            ctaButtonColor: "#000000",
+            ctaButtonTextColor: "#ffffff",
+            borderRadius: "large",
+            startButtonText: "Start",
+            endButtonText: "End Call",
+            chatFirstMessage: "Hey, How can I help you today?",
+            chatPlaceholder: "Type your message...",
+            voiceShowTranscript: true,
+            consentRequired: true,
+            consentTitle: "Terms and conditions",
+            consentContent: "By clicking 'Agree,' and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service.",
+            consentStorageKey: "vapi_widget_consent"
+          }
+        });
+        widgetInitialized = true;
+      }
     });
   </script>
 </body>
