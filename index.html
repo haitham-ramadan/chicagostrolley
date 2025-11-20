@@ -2,23 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Chicago Trolley</title>
   <style>
     body {
       margin: 0;
       background: #000;
-      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
-      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding: 10px;
+      box-sizing: border-box;
     }
     .container {
       text-align: center;
-      max-width: 600px;
+      max-width: 100%;
+      width: 600px;
       padding: 20px;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
