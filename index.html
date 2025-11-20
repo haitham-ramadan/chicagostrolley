@@ -2,215 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Chicago Trolley - Voice Agent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chicagostrolley Demo</title>
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    
-    html, body {
-      height: 100%;
       background: #000;
       color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      overflow-x: hidden;
-    }
-    
-    .container {
+      font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      height: 100vh;
+    }
+    .container {
       text-align: center;
     }
-    
-    .logo {
-      font-size: 4rem;
-      margin-bottom: 20px;
-    }
-    
     h1 {
-      font-size: 2rem;
+      font-size: 1.5rem;
       margin-bottom: 10px;
-      background: linear-gradient(135deg, #fff 0%, #14B8A6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
-    
     p {
-      font-size: 1.1rem;
-      color: #888;
-      margin-bottom: 20px;
-    }
-    
-    .status {
-      font-size: 0.9rem;
-      color: #14B8A6;
-      padding: 10px 20px;
-      background: rgba(20, 184, 166, 0.1);
-      border-radius: 8px;
-      margin-top: 15px;
-    }
-    
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      
-      p {
-        font-size: 0.95rem;
-      }
-      
-      .logo {
-        font-size: 3rem;
-      }
-    }
-    
-    /* Ensure widget button is visible and accessible */
-    .vapi-btn {
-      z-index: 9999 !important;
-      position: fixed !important;
-      bottom: 20px !important;
-      right: 20px !important;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">🚎</div>
-    <h1>Chicago Trolley Voice Agent</h1>
-    <p>Click the button in the bottom-right corner to talk with our AI assistant</p>
-    <div class="status" id="status">Initializing widget...</div>
+    <h1>Chicagostrolley Voice Agent</h1>
+    <p>Tap the button on the bottom right to start chatting.</p>
   </div>
-  
-  <script>
-    var vapiInstance = null;
-    const assistant = "22f9046d-bd90-4f10-b7b7-66d865e0e546";
-    const apiKey = "a3414333-681c-482c-8ffa-c1be89d89d99";
-    
-    const buttonConfig = {
-      position: "bottom-right",
-      offset: "20px",
-      width: "70px",
-      height: "70px",
-      idle: {
-        color: `rgb(20, 184, 166)`,
-        type: "pill",
-        title: "Talk with us",
-        subtitle: "Click to start",
-        icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
-      },
-      loading: {
-        color: `rgb(20, 184, 166)`,
-        type: "pill",
-        title: "Connecting...",
-        subtitle: "Please wait",
-        icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
-      },
-      active: {
-        color: `rgb(239, 68, 68)`,
-        type: "pill",
-        title: "Call in progress",
-        subtitle: "Click to end",
-        icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
-      },
-    };
-    
-    // Load Vapi SDK dynamically
-    (function (d, t) {
-      var g = document.createElement(t),
-        s = d.getElementsByTagName(t)[0];
-      g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-      g.defer = true;
-      g.async = true;
-      s.parentNode.insertBefore(g, s);
-      
-      g.onload = function () {
-        // Initialize Vapi widget after SDK loads
-        try {
-          vapiInstance = window.vapiSDK.run({
-            apiKey: apiKey,
-            assistant: assistant,
-            config: buttonConfig,
-          });
-          
-          document.getElementById("status").textContent = "✓ Widget ready! Click the button to start.";
-          document.getElementById("status").style.color = "#14B8A6";
-          
-          // Add event listeners
-          if (vapiInstance) {
-            vapiInstance.on("call-start", () => {
-              console.log("Call started");
-              document.getElementById("status").textContent = "📞 Call in progress...";
-            });
-            
-            vapiInstance.on("call-end", () => {
-              console.log("Call ended");
-              document.getElementById("status").textContent = "✓ Call ended. Click button to start again.";
-            });
-            
-            vapiInstance.on("speech-start", () => {
-              console.log("Assistant speaking");
-              document.getElementById("status").textContent = "🗣️ Assistant speaking...";
-            });
-            
-            vapiInstance.on("speech-end", () => {
-              console.log("Assistant finished");
-              document.getElementById("status").textContent = "👂 Listening...";
-            });
-            
-            vapiInstance.on("message", (message) => {
-              console.log("Message:", message);
-            });
-            
-            vapiInstance.on("error", (error) => {
-              console.error("Vapi error:", error);
-              document.getElementById("status").textContent = "❌ Error: " + error.message;
-              document.getElementById("status").style.color = "#ef4444";
-            });
-          }
-          
-        } catch (error) {
-          console.error("Failed to initialize Vapi:", error);
-          document.getElementById("status").textContent = "❌ Failed to load. Please refresh the page.";
-          document.getElementById("status").style.color = "#ef4444";
-        }
-      };
-      
-      g.onerror = function () {
-        console.error("Failed to load Vapi SDK");
-        document.getElementById("status").textContent = "❌ Failed to load SDK. Please refresh.";
-        document.getElementById("status").style.color = "#ef4444";
-      };
-      
-    })(document, "script");
-    
-    // Mobile audio fix - resume AudioContext on user interaction
-    let audioContextResumed = false;
-    
-    function resumeAudioContext() {
-      if (!audioContextResumed && (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined')) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
-        
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume().then(() => {
-            console.log('Audio context resumed for mobile');
-            audioContextResumed = true;
-          });
-        }
-      }
-    }
-    
-    // Trigger on first user interaction (critical for mobile)
-    document.addEventListener('touchstart', resumeAudioContext, { once: true });
-    document.addEventListener('click', resumeAudioContext, { once: true });
-  </script>
+
+  <vapi-widget
+    public-key="a3414333-681c-482c-8ffa-c1be89d89d99"
+    assistant-id="22f9046d-bd90-4f10-b7b7-66d865e0e546"
+    mode="voice"
+    theme="dark"
+    base-bg-color="#000000"
+    accent-color="#14B8A6"
+    cta-button-color="#000000"
+    cta-button-text-color="#ffffff"
+    border-radius="large"
+    size="compact"
+    position="bottom-right"
+    title="Chicagostrolley"
+    start-button-text="Start"
+    end-button-text="End Call"
+    chat-first-message="Hey, How can I help you today?"
+    chat-placeholder="Type your message..."
+    voice-show-transcript="true"
+    consent-required="false"
+  ></vapi-widget>
+  <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
 </body>
 </html>
