@@ -32,7 +32,6 @@
     .logo {
       font-size: 4rem;
       margin-bottom: 20px;
-      animation: fadeIn 0.8s ease;
     }
     
     h1 {
@@ -42,195 +41,21 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: fadeIn 1s ease 0.2s both;
     }
     
     p {
       font-size: 1.1rem;
       color: #888;
-      margin-bottom: 30px;
-      animation: fadeIn 1.2s ease 0.4s both;
-    }
-    
-    #vapiButton {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: #14B8A6;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      box-shadow: 0 4px 20px rgba(20, 184, 166, 0.5);
-      transition: all 0.3s ease;
-      z-index: 9999;
-      animation: fadeIn 1.4s ease 0.6s both, pulse 2s infinite;
-    }
-    
-    #vapiButton:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 30px rgba(20, 184, 166, 0.7);
-    }
-    
-    #vapiButton.active {
-      background: #ef4444;
-      animation: none;
-    }
-    
-    .modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #1a1a1a;
-      border: 2px solid #14B8A6;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 400px;
-      max-height: 80vh;
-      overflow-y: auto;
-      padding: 30px;
-      z-index: 10000;
-      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
-    }
-    
-    .modal.show {
-      display: block;
-      animation: slideUp 0.3s ease;
-    }
-    
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #333;
-    }
-    
-    .modal-header h2 {
-      font-size: 1.3rem;
-      color: #14B8A6;
-    }
-    
-    .close-btn {
-      background: none;
-      border: none;
-      color: #888;
-      font-size: 1.8rem;
-      cursor: pointer;
-      padding: 0;
-      width: 30px;
-      height: 30px;
-      line-height: 1;
     }
     
     .status {
-      text-align: center;
-      padding: 15px;
-      background: rgba(20, 184, 166, 0.1);
-      border-radius: 10px;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-      color: #14B8A6;
-    }
-    
-    .transcript {
-      max-height: 300px;
-      overflow-y: auto;
-      padding: 15px;
-      background: #0a0a0a;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-    
-    .message {
-      margin-bottom: 15px;
-      padding: 10px;
-      border-radius: 8px;
       font-size: 0.9rem;
-      line-height: 1.5;
-    }
-    
-    .message.user {
-      background: #14B8A6;
-      color: #000;
-      margin-left: 20px;
-    }
-    
-    .message.assistant {
-      background: #333;
-      color: #fff;
-      margin-right: 20px;
-    }
-    
-    .controls {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-    
-    .btn {
-      flex: 1;
-      padding: 15px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .btn-start {
-      background: #14B8A6;
-      color: #000;
-    }
-    
-    .btn-end {
-      background: #ef4444;
-      color: #fff;
-    }
-    
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
-    }
-    
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translate(-50%, -40%);
-      }
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-      }
+      color: #14B8A6;
+      padding: 10px 20px;
+      background: rgba(20, 184, 166, 0.1);
+      border-radius: 8px;
+      margin-top: 15px;
     }
     
     @media (max-width: 600px) {
@@ -245,17 +70,14 @@
       .logo {
         font-size: 3rem;
       }
-      
-      #vapiButton {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-      }
-      
-      .modal {
-        width: 95%;
-        padding: 20px;
-      }
+    }
+    
+    /* Ensure widget button is visible and accessible */
+    .vapi-btn {
+      z-index: 9999 !important;
+      position: fixed !important;
+      bottom: 20px !important;
+      right: 20px !important;
     }
   </style>
 </head>
@@ -263,169 +85,132 @@
   <div class="container">
     <div class="logo">🚎</div>
     <h1>Chicago Trolley Voice Agent</h1>
-    <p>Tap the button below to start talking with our AI assistant</p>
+    <p>Click the button in the bottom-right corner to talk with our AI assistant</p>
+    <div class="status" id="status">Initializing widget...</div>
   </div>
-  
-  <button id="vapiButton" onclick="toggleModal()">🎤</button>
-  
-  <div id="modal" class="modal">
-    <div class="modal-header">
-      <h2>Voice Assistant</h2>
-      <button class="close-btn" onclick="toggleModal()">×</button>
-    </div>
-    
-    <div id="status" class="status">Ready to connect</div>
-    
-    <div id="transcript" class="transcript">
-      <div class="message assistant">Hey, How can I help you today?</div>
-    </div>
-    
-    <div class="controls">
-      <button id="startBtn" class="btn btn-start" onclick="startCall()">Start Call</button>
-      <button id="endBtn" class="btn btn-end" onclick="endCall()" disabled>End Call</button>
-    </div>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.1.4/dist/index.umd.js"></script>
   
   <script>
-    let vapi;
-    let isCallActive = false;
-    let audioContext;
+    var vapiInstance = null;
+    const assistant = "22f9046d-bd90-4f10-b7b7-66d865e0e546";
+    const apiKey = "a3414333-681c-482c-8ffa-c1be89d89d99";
     
-    // Initialize Vapi client
-    function initVapi() {
-      try {
-        vapi = new window.Vapi("a3414333-681c-482c-8ffa-c1be89d89d99");
-        
-        // Event listeners
-        vapi.on("call-start", () => {
-          console.log("Call started");
-          isCallActive = true;
-          updateUI("connected");
-          document.getElementById("vapiButton").classList.add("active");
-        });
-        
-        vapi.on("call-end", () => {
-          console.log("Call ended");
-          isCallActive = false;
-          updateUI("ended");
-          document.getElementById("vapiButton").classList.remove("active");
-          
-          // Clean up audio context for iOS
-          if (audioContext) {
-            audioContext.close();
-            audioContext = null;
-          }
-        });
-        
-        vapi.on("speech-start", () => {
-          console.log("Assistant started speaking");
-          updateStatus("Assistant speaking...");
-        });
-        
-        vapi.on("speech-end", () => {
-          console.log("Assistant finished speaking");
-          updateStatus("Listening...");
-        });
-        
-        vapi.on("message", (message) => {
-          console.log("Message:", message);
-          
-          if (message.type === "transcript") {
-            addTranscript(message.role, message.transcript);
-          }
-        });
-        
-        vapi.on("error", (error) => {
-          console.error("Vapi error:", error);
-          updateStatus("Error: " + error.message);
-        });
-        
-      } catch (error) {
-        console.error("Failed to initialize Vapi:", error);
-        updateStatus("Initialization failed. Please refresh.");
-      }
-    }
+    const buttonConfig = {
+      position: "bottom-right",
+      offset: "20px",
+      width: "70px",
+      height: "70px",
+      idle: {
+        color: `rgb(20, 184, 166)`,
+        type: "pill",
+        title: "Talk with us",
+        subtitle: "Click to start",
+        icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
+      },
+      loading: {
+        color: `rgb(20, 184, 166)`,
+        type: "pill",
+        title: "Connecting...",
+        subtitle: "Please wait",
+        icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
+      },
+      active: {
+        color: `rgb(239, 68, 68)`,
+        type: "pill",
+        title: "Call in progress",
+        subtitle: "Click to end",
+        icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg`,
+      },
+    };
     
-    // Initialize AudioContext on user interaction (required for mobile)
-    function initAudioContext() {
-      if (!audioContext) {
+    // Load Vapi SDK dynamically
+    (function (d, t) {
+      var g = document.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+      g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+      g.defer = true;
+      g.async = true;
+      s.parentNode.insertBefore(g, s);
+      
+      g.onload = function () {
+        // Initialize Vapi widget after SDK loads
+        try {
+          vapiInstance = window.vapiSDK.run({
+            apiKey: apiKey,
+            assistant: assistant,
+            config: buttonConfig,
+          });
+          
+          document.getElementById("status").textContent = "✓ Widget ready! Click the button to start.";
+          document.getElementById("status").style.color = "#14B8A6";
+          
+          // Add event listeners
+          if (vapiInstance) {
+            vapiInstance.on("call-start", () => {
+              console.log("Call started");
+              document.getElementById("status").textContent = "📞 Call in progress...";
+            });
+            
+            vapiInstance.on("call-end", () => {
+              console.log("Call ended");
+              document.getElementById("status").textContent = "✓ Call ended. Click button to start again.";
+            });
+            
+            vapiInstance.on("speech-start", () => {
+              console.log("Assistant speaking");
+              document.getElementById("status").textContent = "🗣️ Assistant speaking...";
+            });
+            
+            vapiInstance.on("speech-end", () => {
+              console.log("Assistant finished");
+              document.getElementById("status").textContent = "👂 Listening...";
+            });
+            
+            vapiInstance.on("message", (message) => {
+              console.log("Message:", message);
+            });
+            
+            vapiInstance.on("error", (error) => {
+              console.error("Vapi error:", error);
+              document.getElementById("status").textContent = "❌ Error: " + error.message;
+              document.getElementById("status").style.color = "#ef4444";
+            });
+          }
+          
+        } catch (error) {
+          console.error("Failed to initialize Vapi:", error);
+          document.getElementById("status").textContent = "❌ Failed to load. Please refresh the page.";
+          document.getElementById("status").style.color = "#ef4444";
+        }
+      };
+      
+      g.onerror = function () {
+        console.error("Failed to load Vapi SDK");
+        document.getElementById("status").textContent = "❌ Failed to load SDK. Please refresh.";
+        document.getElementById("status").style.color = "#ef4444";
+      };
+      
+    })(document, "script");
+    
+    // Mobile audio fix - resume AudioContext on user interaction
+    let audioContextResumed = false;
+    
+    function resumeAudioContext() {
+      if (!audioContextResumed && (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined')) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
-        audioContext = new AudioContext();
+        const audioCtx = new AudioContext();
         
-        if (audioContext.state === "suspended") {
-          audioContext.resume();
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume().then(() => {
+            console.log('Audio context resumed for mobile');
+            audioContextResumed = true;
+          });
         }
       }
     }
     
-    async function startCall() {
-      try {
-        // Critical for mobile: Initialize audio context first
-        initAudioContext();
-        
-        updateStatus("Connecting...");
-        document.getElementById("startBtn").disabled = true;
-        
-        await vapi.start("22f9046d-bd90-4f10-b7b7-66d865e0e546");
-        
-        document.getElementById("endBtn").disabled = false;
-        updateStatus("Connected! Start speaking...");
-        
-      } catch (error) {
-        console.error("Failed to start call:", error);
-        updateStatus("Failed to connect: " + error.message);
-        document.getElementById("startBtn").disabled = false;
-      }
-    }
-    
-    async function endCall() {
-      try {
-        await vapi.stop();
-        document.getElementById("startBtn").disabled = false;
-        document.getElementById("endBtn").disabled = true;
-        updateStatus("Call ended");
-        
-      } catch (error) {
-        console.error("Failed to end call:", error);
-      }
-    }
-    
-    function toggleModal() {
-      const modal = document.getElementById("modal");
-      modal.classList.toggle("show");
-      
-      // Initialize on first open
-      if (!vapi && modal.classList.contains("show")) {
-        initVapi();
-      }
-    }
-    
-    function updateStatus(text) {
-      document.getElementById("status").textContent = text;
-    }
-    
-    function updateUI(state) {
-      if (state === "connected") {
-        updateStatus("Connected! Start speaking...");
-      } else if (state === "ended") {
-        updateStatus("Call ended. Click Start to begin again.");
-      }
-    }
-    
-    function addTranscript(role, text) {
-      const transcript = document.getElementById("transcript");
-      const message = document.createElement("div");
-      message.className = `message ${role}`;
-      message.textContent = text;
-      transcript.appendChild(message);
-      transcript.scrollTop = transcript.scrollHeight;
-    }
-    
-    // Enable audio on any user interaction (critical for iOS)
-    document.addEventListener("touchstart", initAudioContext, { once: true });
-    document.addEventListener("click", initAudioContext, { once: true });
+    // Trigger on first user interaction (critical for mobile)
+    document.addEventListener('touchstart', resumeAudioContext, { once: true });
+    document.addEventListener('click', resumeAudioContext, { once: true });
   </script>
 </body>
 </html>
